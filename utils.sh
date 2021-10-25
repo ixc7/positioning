@@ -1,5 +1,12 @@
 #!/usr/local/bin/bash
 
+esc="\x1b"
+
+declare -A cursor=(
+  [hide]="${esc}[?25l"
+  [show]="${esc}[?25h"
+)
+
 printKeys () {
   declare -n arr=$1
   [[ -z ${arr[@]} ]] ||
@@ -21,7 +28,10 @@ toUpperCase () {
   printf "${1}" | tr [a-z] [A-Z]
 }
 
-function header () {
+header () {
+  [[ ! -z $2 ]] && y=$2 || y=$(( $(tput lines) / 2 ))
   startPos=$(( $(( $(tput cols) / 2 )) - $(( ${#1} / 2 )) ))
-  tput cup 0 ${startPos} && echo -ne "\x1b[2K${1}"
+  tput cup $y ${startPos} && echo -ne "\x1b[2K${1}"
 }
+
+# get horizontal center, get vertical center
