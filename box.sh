@@ -2,8 +2,6 @@
 
 source utils.sh
 
-
-
 x=$(( $(tput cols) - 1 ))
 y=$(( $(tput lines) - 2 ))
 
@@ -28,8 +26,7 @@ declare -A box=(
   [y]=0
 )
 
-
-
+# test
 runTests () {
   clear
   tput civis
