@@ -1,18 +1,9 @@
 #!/usr/local/bin/bash
 
-# TODO increment util
-#      random spawn pos
-#      multiple boxes in row
-#      color picker (fg and bg)
-#      tput setab
+source utils.sh
 
-trap cleanup SIGINT
-
-function cleanup () {
-  tput cnorm
-  tput sgr0
-  exit 0
-}
+# setTrap
+setTrap SIGINT
 
 function fgcolors () {
   cur=255

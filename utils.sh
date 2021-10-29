@@ -8,7 +8,18 @@ declare -A cursor=(
 )
 
 req () {
-  [[ -z "${1}" ]] && exit 1
+  [[ -z "${1}" ]] && echo "ERROR: missing args" && exit 1
+}
+
+function setTrap () {
+  req "$@"
+  trap cleanup "$@"
+
+  function cleanup () {
+    tput cnorm
+    tput sgr0
+    exit 0
+  }
 }
 
 printKeys () {
