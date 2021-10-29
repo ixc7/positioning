@@ -7,15 +7,26 @@ declare -A cursor=(
   [show]="${esc}[?25h"
 )
 
-req () {
-  [[ -z "${1}" ]] && echo "ERROR: missing args" && exit 1
+require () {
+  [[ ! -z "${1}" ]] && 
+  echo true
 }
 
-function setTrap () {
-  req "$@"
-  trap cleanup "$@"
+requireExec () {
+  args="${@:2}"
+  
+  [[ ! -z $(require $args) ]] &&
+  [[ $(type -t $1) == function ]] && 
+  $1 $args
+}
 
-  function cleanup () {
+setTrap () {
+  [[ ! -z $(require $@) ]] &&
+  sig=$@ || sig=SIGINT
+
+  trap cleanup $(echo $sig)
+
+  cleanup () {
     tput cnorm
     tput sgr0
     exit 0

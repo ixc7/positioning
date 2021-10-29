@@ -2,8 +2,8 @@
 
 source utils.sh
 
-# setTrap
-setTrap SIGINT
+# setTrap SIGINT
+setTrap
 
 function fgcolors () {
   cur=255
