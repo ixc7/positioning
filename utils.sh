@@ -7,6 +7,10 @@ declare -A cursor=(
   [show]="${esc}[?25h"
 )
 
+req () {
+  [[ -z "${1}" ]] && exit 1
+}
+
 printKeys () {
   declare -n arr=$1
   [[ -z ${arr[@]} ]] ||
@@ -33,5 +37,3 @@ header () {
   startPos=$(( $(( $(tput cols) / 2 )) - $(( ${#1} / 2 )) ))
   tput cup $y ${startPos} && echo -ne "\x1b[2K${1}"
 }
-
-
