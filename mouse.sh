@@ -2,6 +2,8 @@
 
 source utils.sh
 
+setTrap
+
 getCoordinates () {
   str=$1 
   read -rsn1 key

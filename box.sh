@@ -2,6 +2,8 @@
 
 source utils.sh
 
+setTrap
+
 x=$(( $(tput cols) - 1 ))
 y=$(( $(tput lines) - 2 ))
 
