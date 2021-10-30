@@ -2,7 +2,6 @@
 
 source utils.sh
 
-# setTrap SIGINT
 setTrap
 
 function fgcolors () {

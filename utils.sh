@@ -1,10 +1,14 @@
 #!/usr/local/bin/bash
 
+depend () {
+  [[ -z "${1}" ]] && exit 1
+}
+
 require () {
   [[ ! -z "${1}" ]] && echo true
 }
 
-requireExec () {
+requireFn () {
   args="${@:2}"
   [[ ! -z $(require $args) ]] &&
   [[ $(type -t $1) == function ]] && 
@@ -40,6 +44,10 @@ isNum () {
 
 joinStr () {
   printf "${@//[^a-zA-Z0-9]/_}"
+}
+
+repeatStr () {
+  printf "%0.s${1}" $(seq 1 $2)
 }
 
 toUpperCase () {

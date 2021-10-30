@@ -5,7 +5,7 @@ source utils.sh
 setTrap
 
 getCoordinates () {
-  str=$1 
+  str=$1
   read -rsn1 key
 
   [[ $key != m ]] && 
@@ -15,16 +15,18 @@ getCoordinates () {
 
   y=$(( $(echo $str | cut -d ';' -f 2) - 1 ))
   x=$(( $(echo $str | cut -d ';' -f 1) - 1 ))
+  
+  tput cup $y $x
+  
+  # [[ $key == M ]] &&
+  # tput setab 4 ||
+  # tput setab 12
 
-  [[ $key == M ]] && 
-  tput setab 4 ||
-  tput setab 12
-
-  tput cup $y $x && printf ' '
+  # tput cup $y $x && printf ' '
 }
 
 enableMouse () {
-  tput civis
+  # tput civis
   clear
   printf "\x1b[?1000;1006;1016h"
   header "mouse reporting enabled. press 'q' to quit."
