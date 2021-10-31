@@ -11,21 +11,32 @@ boxH=5
 startX=12
 startY=15
 
-endX=$(( $startX + $boxW ))
-endY=$(( $startY + $boxH ))
+endX=$(($startX + $boxW))
+endY=$(($startY + $boxH))
 
 charX="="
 charY="|"
 
-outerCol=$(repeatStr $charX $boxW)
-innerCol=$charY$(repeatStr " " $(( $boxW - 2 )))$charY
-innerCols=$(repeatStr "${innerCol}\n" $(( $boxH - 2 )))
 
-boxOutline="
-$outerCol
-$innerCols
-$outerCol
-"
+drawOutline () {
+  draw () {
+    tput cup $startY $startX &&  
+    startY=$((startY + 1)) &&
+    echo "$1"
+  }
 
-echo "$boxOutline"
+  outer=$(printf "$(repeatStr $charX $boxW)")
+  inner=$(printf "$charY$(repeatStr " " $(( $boxW - 2 )))$charY")
+  cur=0
+  
+  draw "$outer"
+  while [ $cur -lt $(($boxH - 2)) ]
+  do
+    draw "$inner"
+    ((cur++))
+  done
+  draw "$outer"
+}
 
+
+drawOutline
