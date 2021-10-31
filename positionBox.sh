@@ -2,21 +2,23 @@
 
 source utils.sh
 
+setTrap
+
 termW=$(tput cols)
 termH=$(tput lines)
 
-boxW=10
-boxH=5
+defineBox () { 
+  boxW=$1
+  boxH=$2
+  charX="$3"
+  charY="$4"
+}
 
-
-# endX=$(($startX + $boxW))
-# endY=$(($startY + $boxH))
-
-charX="="
-charY="|"
-
+defineBox 15 7 "☠" "☠" 
 
 drawOutline () {
+  # require defineBox ...
+  
   startX=$1
   startY=$2
   cur=0
@@ -28,7 +30,8 @@ drawOutline () {
     startY=$((startY + 1)) &&
     echo "$1"
   }
-  
+
+  tput setaf $3
   draw "$outer"
   while [ $cur -lt $(($boxH - 2)) ]
   do
@@ -40,11 +43,20 @@ drawOutline () {
 
 # drawContents () { ... }
 
-clear
-drawOutline 10 15
-drawOutline 16 25
-drawOutline 4 43
-drawOutline 56 13
-drawOutline 1 1
-tput cup $termH 0
+# drawBox () { drawOutline & drawContents && ... }
 
+runTests () {
+  clear && reset && tput civis
+  drawOutline 10 15 1
+  drawOutline 16 25 12
+  drawOutline 4 6 3
+  drawOutline 56 13 7
+  drawOutline 65 10 196
+  drawOutline 1 1 78
+  drawOutline $(( $(( $termW - $boxW )) / 2 )) 4 12
+  drawOutline $(( $termW - $boxW - 1 )) $(( $termH - $boxH - 1)) 67
+  drawOutline $(( $termW - $boxW - 40 )) $(( $termH - $boxH - 1)) 99
+  tput cup $termH 0 && tput cnorm && tput sgr0
+}
+
+runTests
