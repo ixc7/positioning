@@ -8,26 +8,26 @@ termH=$(tput lines)
 boxW=10
 boxH=5
 
-startX=12
-startY=15
 
-endX=$(($startX + $boxW))
-endY=$(($startY + $boxH))
+# endX=$(($startX + $boxW))
+# endY=$(($startY + $boxH))
 
 charX="="
 charY="|"
 
 
 drawOutline () {
+  startX=$1
+  startY=$2
+  cur=0
+  outer=$(printf "$(repeatStr $charX $boxW)")
+  inner=$(printf "$charY$(repeatStr " " $(( $boxW - 2 )))$charY")
+
   draw () {
     tput cup $startY $startX &&  
     startY=$((startY + 1)) &&
     echo "$1"
   }
-
-  outer=$(printf "$(repeatStr $charX $boxW)")
-  inner=$(printf "$charY$(repeatStr " " $(( $boxW - 2 )))$charY")
-  cur=0
   
   draw "$outer"
   while [ $cur -lt $(($boxH - 2)) ]
@@ -38,5 +38,13 @@ drawOutline () {
   draw "$outer"
 }
 
+# drawContents () { ... }
 
-drawOutline
+clear
+drawOutline 10 15
+drawOutline 16 25
+drawOutline 4 43
+drawOutline 56 13
+drawOutline 1 1
+tput cup $termH 0
+
